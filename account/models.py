@@ -13,3 +13,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'Profile: {self.user.username}'
+
+    def get_image_or_default_url(self):
+        if self.image:
+            return image
+        return 'account/profile_image/placeholder.png'

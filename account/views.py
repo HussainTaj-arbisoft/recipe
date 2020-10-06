@@ -49,6 +49,7 @@ def signup(request):
                 user.username = user.email
                 user.profile = Profile()
                 user.save()
+                user.profile.save()
                 login(request, user)
                 return __redirect_url_or_home(request)
     else:
