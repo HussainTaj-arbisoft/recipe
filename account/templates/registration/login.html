@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load common_tags %}
+{% block title %}
+Login | Account
+{% endblock title %}
+
+
+{% block content %}
+    {% if form.errors %}
+        {% for errors in form.errors.values %}
+         <div class="text-danger">
+            {{errors}}
+        </div>
+        {% endfor %}
+       
+    {% endif %}
+    <div class='p-2'>
+            <form action="{% url "account:login" %}" method="POST">
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{field.id_for
+                    _label}}">{{field.label}}</label>
+                    {% if field.errors %}
+                        <div class="text-danger">
+                            {{field.errors}}
+                        </div>
+                    {% endif %}
+                    {{field | addclass:"form-control"}}
+                </div>
+            {% endfor %}    
+            <input type="submit" value="Login" class="btn btn-primary form-control"/>
+            {% csrf_token %}
+            <input type="hidden" value="{% url "recipe:home" %}" name="next" />
+        </form>
+    </div>
+{% endblock content %}

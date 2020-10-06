@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = '@yam(j5o5-s@#xl6ak#-d)j0%*#+1gy5*&%grnh#rq0s)h)qs6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','hussaintaja.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', 'hussaintaja.pythonanywhere.com']
 
 
 # Application definition
@@ -37,8 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Custom
+    'account.apps.AccountConfig',
     'recipe.apps.RecipeConfig',
-    'taggit'
+
+    # third party
+    'taggit',
+
+    # Dev
+    'django_rename_app',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +130,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media', '')
