@@ -16,5 +16,5 @@ class Profile(models.Model):
 
     def get_image_or_default_url(self):
         if self.image:
-            return image
+            return self.image
         return 'account/profile_image/placeholder.png'
