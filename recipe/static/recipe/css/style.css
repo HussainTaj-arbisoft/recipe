@@ -24,3 +24,18 @@ body {
 .review-form {
     width: 100%;
 }
+
+.error {
+    color: #AA0000;
+}
+
+.success {
+    color: green;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }

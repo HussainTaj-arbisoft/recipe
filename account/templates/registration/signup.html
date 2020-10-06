@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load common_tags %}
+{% block title %}
+Signup | Account
+{% endblock title %}
+
+{% block content %}
+    <div class='p-2 container'>
+            <form action="{% url "account:signup" %}" method="POST" class="row m-0">
+            {% for field in form %}
+                <div class="form-group col-md-6 col-sm-12">
+                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                    {% if field.errors %}
+                        <div class="text-danger">
+                            {{field.errors}}
+                        </div>
+                    {% endif %}
+                    {{field | addclass:"form-control"}}
+                </div>
+            {% endfor %}    
+            <input type="submit" value="Sign Up" class="btn btn-primary col-12"/>
+            {% csrf_token %}
+            <input type="hidden" value="{% url "recipe:home" %}" name="next"/>
+        </form>
+    </div>
+{% endblock content %}
