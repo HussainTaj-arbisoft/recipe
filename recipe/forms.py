@@ -1,6 +1,8 @@
 from django import forms
-from django.core.validators import MinValueValidator, MaxValueValidator
-from recipe.models import Review, Recipe
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+from recipe.models import Recipe, Review
+
 
 class ReviewForm(forms.ModelForm):
     class Meta:

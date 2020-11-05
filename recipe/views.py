@@ -1,12 +1,10 @@
-from django.http import HttpResponse, HttpRequest, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from django.db.models import Count
-
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db.models import Count
+from django.http import (HttpRequest, HttpResponse, HttpResponseNotFound,
+                         HttpResponseRedirect)
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-
 from taggit.models import Tag
 
 from recipe.forms import ReviewForm

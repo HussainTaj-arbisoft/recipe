@@ -1,8 +1,7 @@
+import markdown as md
 from django import template
 from django.db.models import Avg
 from django.utils.safestring import mark_safe
-
-import markdown as md
 
 from recipe.models import Review
 
@@ -27,6 +26,7 @@ def get_average_rating(slug):
     if avg:
         return round(avg, 1)
     return 'New'
+
 
 @register.filter(name='markdown')
 def markdown_format(data):

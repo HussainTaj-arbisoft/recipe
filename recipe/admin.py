@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import *
+
 from .forms import RecipeForm
+from .models import *
 
 
 class IngredientInline(admin.TabularInline):
