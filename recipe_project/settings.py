@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     # Custom
     'account.apps.AccountConfig',
     'recipe.apps.RecipeConfig',
+    'api.apps.ApiConfig',
 
     # third party
     'taggit',
+    'rest_framework',
 
     # Dev
     'django_rename_app',

@@ -1,20 +1,14 @@
-from django.shortcuts import render
-from django.http.response import HttpResponseRedirect
-from django.http.request import HttpRequest
-
-from django.core.validators import URLValidator, ValidationError
-from django.contrib.auth.models import User
-
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.validators import URLValidator, ValidationError
+from django.http.request import HttpRequest
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 
-
+from .forms import ProfileForm, SignupForm, UserEditForm
 from .models import Profile
-from .forms import UserEditForm, SignupForm, ProfileForm
-
-from django.shortcuts import get_object_or_404
 
 
 def __redirect_url_or_home(request: HttpRequest, home: str = '/'):
