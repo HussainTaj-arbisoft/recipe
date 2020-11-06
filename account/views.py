@@ -41,6 +41,7 @@ def signup(request):
             except User.DoesNotExist:
                 user: User = user_form.save(commit=False)
                 user.username = user.email
+                user.set_password(user_form.cleaned_data['password'])
                 user.profile = Profile()
                 user.save()
                 user.profile.save()
