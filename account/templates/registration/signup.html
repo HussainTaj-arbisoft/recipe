@@ -20,7 +20,7 @@ Signup | Account
             {% endfor %}    
             <input type="submit" value="Sign Up" class="btn btn-primary col-12"/>
             {% csrf_token %}
-            <input type="hidden" value="{% url "recipe:home" %}" name="next"/>
+            <input type="hidden" value="{% url "recipe:recipe_home" %}" name="next"/>
         </form>
     </div>
 {% endblock content %}
