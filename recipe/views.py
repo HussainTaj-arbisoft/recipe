@@ -5,10 +5,13 @@ from django.http import (HttpRequest, HttpResponse, HttpResponseNotFound,
                          HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from taggit.models import Tag
 
-from recipe.forms import ReviewForm
+from recipe.forms import ReviewForm, RecipeIngredientFormSet, RecipeForm
 from recipe.models import Recipe, Review
 
 
@@ -73,3 +76,31 @@ class UserRecipeListView(ListView):
 
     def get_queryset(self):
         return Recipe.objects.filter(author__username=self.kwargs.get('username'))
+
+
+class RecipeCreateView(CreateView, LoginRequiredMixin):
+    model = Recipe
+    form_class = RecipeForm
+    template_name = 'recipe/recipe_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.method == 'POST':
+            context['form_ingredients'] = RecipeIngredientFormSet(
+                self.request.POST)
+        else:
+            context['form_ingredients'] = RecipeIngredientFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        form_ingredients = context['form_ingredients']
+
+        self.object = form.save()
+        self.object.author = self.request.user
+        self.object.save()
+
+        if form_ingredients.is_valid():
+            form_ingredients.instance = self.object
+            form_ingredients.save()
+        return super(RecipeCreateView, self).form_valid(form)

@@ -39,3 +39,11 @@ body {
     margin-right: auto;
     width: 50%;
   }
+
+.recipe_create_form input {
+    width: 100%;
+}
+
+.recipe_create_form textarea {
+    width: 100%;
+}
