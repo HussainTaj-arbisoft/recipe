@@ -50,7 +50,7 @@ Edit | Account
 
             <input type="submit" value="Save Changes" class="btn btn-primary form-control"/>
             {% csrf_token %}
-            <input type="hidden" value="{% url "recipe:home" %}" name="next" />
+            <input type="hidden" value="{% url "recipe:recipe_home" %}" name="next" />
         </form>
     </div>
 {% endblock content %}
