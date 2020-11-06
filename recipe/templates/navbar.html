@@ -9,6 +9,9 @@
       <li class="nav-item mx-2">
         <a class="nav-link" href="{% url "recipe:user_recipe_list" user.username %}">My Recipes</a>
       </li>
+      <li class="nav-item mx-2">
+        <a class="nav-link" href="{% url "recipe:recipe_create" %}">Create New</a>
+      </li>
     {% endif %}
       <li class="nav-item">
           <form class="form-inline my-2 my-lg-0" action="{% url "recipe:search_recipe" %}">
