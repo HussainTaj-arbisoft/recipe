@@ -12,7 +12,14 @@
     <div class="row align-items-center">
         <div class="col-11">    
             <h1 class="h1">{{recipe.title}}</h1>
-            <p class="text-muted">{{ recipe.prep_time | duration }} Prep Time - Author: {{ recipe.author }}</p>
+            <p class="text-muted">
+                {{ recipe.prep_time | duration }} Prep Time - 
+                Author: 
+                <a href="{% url "recipe:user_recipe_list" username=recipe.author.username %}">
+                    {{ recipe.author }}
+                </a>
+
+            </p>
         </div>
         <div class="col-1">
             {% average_rating slug%}  <i class="fas fa-star"></i>
