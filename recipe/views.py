@@ -5,6 +5,7 @@ from django.http import (HttpRequest, HttpResponse, HttpResponseNotFound,
                          HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
+from django.views.generic import ListView
 from taggit.models import Tag
 
 from recipe.forms import ReviewForm
@@ -65,3 +66,10 @@ def search_recipe(request: HttpRequest):
     result = Recipe.objects.filter(title__contains=query)
     return render(request, 'recipe/recipe_list.html',
                   {'recipes': result})
+
+
+class UserRecipeListView(ListView):
+    template_name = 'recipe/user_recipe_list.html'
+
+    def get_queryset(self):
+        return Recipe.objects.filter(author__username=self.kwargs.get('username'))

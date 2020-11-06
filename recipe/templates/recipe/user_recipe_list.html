@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load recipe_tags %}
+
+{% block title %}
+Recipes {{request.user.username}}
+{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Recipes by author {{request.user.username}}</h1>
+    <div class="row">
+        {% for recipe in object_list %}
+            <div class="card m-2" style="width: 18rem;">
+                <img class="card-img-top" src="{{ recipe.image_url }}"
+                    alt="Card image cap" style="height:200px;width:100%;object-fit:cover;">
+                <div class="card-body d-flex justify-content-between flex-column">
+                    <div>
+                        <h5 class="card-title">{{ recipe.title }}</h5>
+                        <p class="card-text"></p>
+                        
+                    </div>
+                    <div>
+                        <div class="row align-items-center">
+                            <p class="col-6">{{ recipe.prep_time | duration }} <i class="fas fa-clock mx-1"></i></p>
+                            <p class="col-6 d-flex justify-content-end align-items-center">{% average_rating recipe.slug%}  <i class="fas fa-star mx-1"></i></p>
+                            
+                        </div>
+                        <div class="row">
+                        <a href="{{recipe.get_absolute_url}}" class="btn btn-primary col-12">Read Now</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
