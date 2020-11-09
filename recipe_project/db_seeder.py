@@ -95,7 +95,7 @@ def seed_user(users_count: int = 50):
     print()
 
 
-def seed_recipe(recipes_count: int = 1000, ingredients_range: (int, int) = (5, 15)):
+def seed_recipe(recipes_count: int = 200, ingredients_range: (int, int) = (5, 15)):
     Recipe.objects.all().delete()
     Ingredient.objects.all().delete()
     print('Old Recipes and Ingredients deleted.')
