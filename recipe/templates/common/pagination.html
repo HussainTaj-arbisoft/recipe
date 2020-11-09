@@ -1,0 +1,80 @@
+<nav aria-label="page-navigator" class="row d-flex justify-content-center">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="javascript:navigate_to_page({{ page_obj.previous_page_number }})" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="javascript:navigate_to_page(1)"> 1</a></li>
+    {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+    {% endif %}
+    <li class="page-item active">
+      <a class="page-link" href="#">{{ page_obj.number }} <span class="sr-only">(current)</span></a>
+    </li>
+    {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="javascript:navigate_to_page({{ page_obj.paginator.num_pages }})">{{ page_obj.paginator.num_pages }}</a></li>
+        <li class="page-item">
+        <a class="page-link" href="javascript:navigate_to_page({{ page_obj.next_page_number }})">Next</a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    {% endif %}
+
+  </ul>
+</nav>
+<script>
+    // https://stackoverflow.com/questions/1090948/change-url-parameters
+    function updateURLParameter(url, param, paramVal)
+    {
+        var TheAnchor = null;
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+
+        if (additionalURL) 
+        {
+            var tmpAnchor = additionalURL.split("#");
+            var TheParams = tmpAnchor[0];
+                TheAnchor = tmpAnchor[1];
+            if(TheAnchor)
+                additionalURL = TheParams;
+
+            tempArray = additionalURL.split("&");
+
+            for (var i=0; i<tempArray.length; i++)
+            {
+                if(tempArray[i].split('=')[0] != param)
+                {
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }        
+        }
+        else
+        {
+            var tmpAnchor = baseURL.split("#");
+            var TheParams = tmpAnchor[0];
+                TheAnchor  = tmpAnchor[1];
+
+            if(TheParams)
+                baseURL = TheParams;
+        }
+
+        if(TheAnchor)
+            paramVal += "#" + TheAnchor;
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
+
+    function navigate_to_page(page_num)
+    {
+        window.location.href = updateURLParameter(window.location.href, 'page', page_num)
+    }
+</script>

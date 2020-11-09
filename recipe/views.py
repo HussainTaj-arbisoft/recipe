@@ -15,19 +15,17 @@ from recipe.forms import ReviewForm, RecipeIngredientFormSet, RecipeForm
 from recipe.models import Recipe, Review
 
 
-def index(request: HttpRequest):
-    return recipes_list(request)
-
-
-def recipes_list(request: HttpRequest):
-    return render(request, 'recipe/recipe_list.html',
-                  {'recipes': Recipe.objects.all()})
+class RecipeListView(ListView):
+    model = Recipe
+    paginate_by = 12
+    template_name = 'recipe/recipe_list.html'
 
 
 def recipe(request: HttpRequest, slug):
     review = None
     if request.user.is_authenticated:
-        review = request.user.reviews.filter(user=request.user)
+        review = request.user.reviews.filter(
+            user=request.user, recipe__slug=slug)
     if review:
         review_form = ReviewForm(instance=review[0])
     else:
@@ -44,7 +42,8 @@ def recipe(request: HttpRequest, slug):
 def review(request: HttpRequest, slug):
     form = ReviewForm(request.POST)
     if form.is_valid():
-        review = request.user.reviews.filter(user=request.user)
+        review = request.user.reviews.filter(
+            user=request.user, recipe__slug=slug)
         if review:
             review = review[0]
         else:
@@ -57,25 +56,39 @@ def review(request: HttpRequest, slug):
     return HttpResponseRedirect(review.recipe.get_absolute_url())
 
 
-def tag_recipe_list(request: HttpRequest, tag_slug):
-    tag = get_object_or_404(Tag, slug=tag_slug)
-    return render(request, 'recipe/recipe_list.html', {
-        'recipes':  Recipe.objects.filter(tags__in=[tag]),
-    })
+class TagRecipeListView(ListView):
+    template_name = 'recipe/recipe_list.html'
+    paginate_by = 12
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        queryset = Recipe.objects.filter(tags__in=[tag])
+        return queryset
 
 
-def search_recipe(request: HttpRequest):
-    query = request.GET['query']
-    result = Recipe.objects.filter(title__contains=query)
-    return render(request, 'recipe/recipe_list.html',
-                  {'recipes': result})
+class SearchRecipeListView(ListView):
+    template_name = 'recipe/recipe_list.html'
+    paginate_by = 12
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        queryset = Recipe.objects.filter(title__contains=query)
+        return queryset
 
 
 class UserRecipeListView(ListView):
     template_name = 'recipe/user_recipe_list.html'
+    paginate_by = 12
 
     def get_queryset(self):
         return Recipe.objects.filter(author__username=self.kwargs.get('username'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["author"] = get_object_or_404(
+            User, username=self.kwargs.get('username'))
+        return context
 
 
 class RecipeCreateView(CreateView, LoginRequiredMixin):
