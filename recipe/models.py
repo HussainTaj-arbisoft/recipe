@@ -23,10 +23,8 @@ class Recipe(models.Model):
     def __str__(self):
         return self.title
 
-    
     def get_absolute_url(self):
         return reverse("recipe:recipe", kwargs={"slug": self.slug})
-    
 
 
 class Ingredient(models.Model):
@@ -34,11 +32,12 @@ class Ingredient(models.Model):
     amount = fields.DecimalField(max_digits=4, decimal_places=2, validators=[
         MinValueValidator(0, 'Value cannot be negative.')
     ])
-    unit = fields.CharField(choices=[
+    UNIT_CHOICES = [
         ('tb-sp', 'Table Spoon'), ('t-sp', 'Tea Spoon'),
         ('cup', 'Cup'), ('lt', 'Litre'), ('kg', 'Kilogram'),
         ('gm', 'gram')
-    ], max_length=10)
+    ]
+    unit = fields.CharField(choices=UNIT_CHOICES, max_length=10)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                related_name='ingredients')
 
@@ -49,8 +48,8 @@ class Ingredient(models.Model):
 class Review(models.Model):
     rating = fields.SmallIntegerField(validators=[
         MaxValueValidator(5),
-        MinValueValidator(1)], 
-        choices=[(1,1), (2,2), (3,3), (4,4), (5,5)], 
+        MinValueValidator(1)],
+        choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)],
         default=5)
     comment = fields.CharField(max_length=255)
     publish_date = fields.DateTimeField(auto_now_add=True)
