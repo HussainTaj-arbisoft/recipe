@@ -11,7 +11,9 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         super().save(args, kwargs)
-        if self.profile is None:
+        try:
+            self.profile = self.profile
+        except Profile.DoesNotExist:
             self.profile = Profile()
         self.profile.save()
 
