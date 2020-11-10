@@ -6,6 +6,8 @@ Login | Account
 
 
 {% block content %}
+<div class="p-2">
+    <h1 class="text-center"> Login </h1>
     {% if form.errors %}
         {% for errors in form.errors.values %}
          <div class="text-danger">
@@ -33,4 +35,5 @@ Login | Account
             <input type="hidden" value="{% url "recipe:recipe_home" %}" name="next" />
         </form>
     </div>
+</div>
 {% endblock content %}

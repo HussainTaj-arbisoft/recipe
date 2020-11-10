@@ -5,6 +5,8 @@ Signup | Account
 {% endblock title %}
 
 {% block content %}
+<div class="p-2">
+    <h1 class="text-center"> Sign Up </h1>
     <div class='p-2 container'>
             <form action="{% url "account:signup" %}" method="POST" class="row m-0">
             {% for field in form %}
@@ -23,4 +25,5 @@ Signup | Account
             <input type="hidden" value="{% url "recipe:recipe_home" %}" name="next"/>
         </form>
     </div>
+</div>
 {% endblock content %}
