@@ -90,11 +90,15 @@ def seed_user(users_count: int = 50):
 
         user.save()
 
-        print(f"Progress: {((user_number+1)/users_count * 100):.2f}%", end="\r")
+        print(
+            f"Progress: {((user_number+1)/users_count * 100):.2f}%", end="\r"
+        )
     print()
 
 
-def seed_recipe(recipes_count: int = 200, ingredients_range: (int, int) = (5, 15)):
+def seed_recipe(
+    recipes_count: int = 200, ingredients_range: (int, int) = (5, 15)
+):
     Recipe.objects.all().delete()
     Ingredient.objects.all().delete()
     print("Old Recipes and Ingredients deleted.")
@@ -113,7 +117,9 @@ def seed_recipe(recipes_count: int = 200, ingredients_range: (int, int) = (5, 15
             slug=f"recipe-number-{recipe_number}-title",
         )
         recipe.save()
-        recipe.tags.set(*random.choices(k=random.randint(1, 4), population=TAGS))
+        recipe.tags.set(
+            *random.choices(k=random.randint(1, 4), population=TAGS)
+        )
 
         for ingredient_number in range(
             random.randint(ingredients_range[0], ingredients_range[1])
@@ -127,7 +133,10 @@ def seed_recipe(recipes_count: int = 200, ingredients_range: (int, int) = (5, 15
             )
             ingredient.save()
 
-        print(f"Progress: {((recipe_number + 1)/recipes_count * 100):.2f}%", end="\r")
+        print(
+            f"Progress: {((recipe_number + 1)/recipes_count * 100):.2f}%",
+            end="\r",
+        )
     print()
 
 
@@ -163,7 +172,7 @@ def seed_superuser():
     user.save()
 
     print("Super user created.")
-    print(f"Username: {user.username}")
+    print(f"Email: {user.email}")
     print("Password: admin")
 
 
@@ -172,13 +181,3 @@ def seed_all_default():
     seed_recipe()
     seed_review()
     seed_superuser()
-
-
-# # Usage
-#
-# $ python manage.py shell
-#
-"""
-from recipe_project.db_seeder import *
-seed_all_default()
-"""
