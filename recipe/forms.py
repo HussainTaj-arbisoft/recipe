@@ -7,11 +7,8 @@ from recipe.models import Ingredient, Recipe, Review
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('rating', 'comment')
-        widgets = {
-            'comment': forms.Textarea(),
-            'rating': forms.RadioSelect()
-        }
+        fields = ("rating", "comment")
+        widgets = {"comment": forms.Textarea(), "rating": forms.RadioSelect()}
 
 
 class RecipeForm(forms.ModelForm):
@@ -19,14 +16,15 @@ class RecipeForm(forms.ModelForm):
 
     class Meta:
         model = Recipe
-        exclude = ['author']
+        exclude = ["author"]
 
 
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ['name', 'amount', 'unit']
+        fields = ["name", "amount", "unit"]
 
 
 RecipeIngredientFormSet = forms.inlineformset_factory(
-    Recipe, Ingredient, IngredientForm)
+    Recipe, Ingredient, IngredientForm
+)

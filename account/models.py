@@ -24,7 +24,9 @@ def _image_path(model, filename: str):
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="profile",
     )
     image = models.ImageField("Profile Picture", upload_to=_image_path)
 

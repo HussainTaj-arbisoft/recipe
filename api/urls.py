@@ -3,12 +3,10 @@ from rest_framework.routers import DefaultRouter
 
 from .views import RecipeViewSet
 
-app_name = 'api'
+app_name = "api"
 
 router = DefaultRouter()
 
-router.register('recipe', RecipeViewSet)
+router.register("recipe", RecipeViewSet)
 
-urlpatterns = [
-    path('', include(router.urls))
-]
+urlpatterns = [path("", include(router.urls))]
