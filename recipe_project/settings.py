@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # Dev
     "django_rename_app",
+    "dev_tools.apps.DevToolsConfig",
 ]
 
 MIDDLEWARE = [
